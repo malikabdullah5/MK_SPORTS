@@ -1,7 +1,9 @@
 from flask import Flask, render_template
-import os  # <-- یہ line add کریں
+import requests
 
 app = Flask(__name__)
+
+API_KEY = "5a3ac28e-edf4-4df3-9941-9d4111fedbc9"  # آپ کا CricketData API key
 
 @app.route('/')
 def home():
@@ -9,15 +11,13 @@ def home():
 
 @app.route('/cricket')
 def cricket():
-    return render_template('cricket.html')  # ICC Widget Page
+    url = f"https://cricketdata.org/api/matches?apikey={API_KEY}"
+    try:
+        response = requests.get(url)
+        live_matches = response.json()
+    except:
+        live_matches = []  # اگر API fail ہو جائے تو empty list
+    return render_template('cricket.html', live_matches=live_matches)
 
-@app.route('/football')
-def football():
-    return render_template('football.html')  # Football Widget Page
-
-# =========================
-# Render کے لیے یہ ضروری ہے
-# =========================
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))  # Render کا dynamic PORT
-    app.run(host="0.0.0.0", port=port)        # 0.0.0.0 = all network interfaces
+    app.run(debug=True)
