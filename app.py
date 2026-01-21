@@ -1,9 +1,11 @@
-from flask import Flask, render_template
+import os
 import requests
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
-API_KEY = "5a3ac28e-edf4-4df3-9941-9d4111fedbc9"  # آپ کا CricketData API key
+API_KEY = "5a3ac28e-edf4-4df3-9941-9d4111fedbc9"  # CricketData.org API key
+API_URL = f"https://cricketdata.org/api/matches?apikey={API_KEY}"
 
 @app.route('/')
 def home():
@@ -11,13 +13,17 @@ def home():
 
 @app.route('/cricket')
 def cricket():
-    url = f"https://cricketdata.org/api/matches?apikey={API_KEY}"
-    try:
-        response = requests.get(url)
-        live_matches = response.json()
-    except:
-        live_matches = []  # اگر API fail ہو جائے تو empty list
-    return render_template('cricket.html', live_matches=live_matches)
+    response = requests.get(API_URL)
+    if response.status_code == 200:
+        matches = response.json()  # JSON data of live matches
+    else:
+        matches = []
+    return render_template('cricket.html', matches=matches)
+
+@app.route('/football')
+def football():
+    return render_template('football.html')
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)

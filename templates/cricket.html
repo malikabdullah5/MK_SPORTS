@@ -1,21 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>MK SPORTS - Live Cricket Score</title>
-    <style>
-        body { font-family: 'Arial', sans-serif; background: #f1f3f6; margin: 0; padding: 0; }
-        header { background: #1b3a57; color: white; padding: 20px; text-align: center; }
-        nav a { color: white; margin: 0 15px; text-decoration: none; font-weight: bold; }
-        section { padding: 20px; max-width: 900px; margin: auto; }
-        .match-card { background: white; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); padding: 15px; transition: transform 0.2s; }
-        .match-card:hover { transform: translateY(-5px); }
-        .teams { font-weight: bold; font-size: 20px; color: #1b3a57; margin-bottom: 10px; }
-        .inning { font-size: 16px; margin-bottom: 5px; color: #333; }
-        .score { font-size: 18px; font-weight: bold; margin-bottom: 5px; }
-        .status { font-size: 14px; font-weight: bold; color: green; }
-        .status.completed { color: red; }
-        footer { text-align: center; padding: 15px; background: #1b3a57; color: white; margin-top: 20px; }
-    </style>
+    <title>MK SPORTS - Cricket Live Score</title>
 </head>
 <body>
     <header>
@@ -28,33 +14,21 @@
     </header>
 
     <section>
-        {% if live_matches %}
-            {% for match in live_matches %}
-                <div class="match-card">
-                    <div class="teams">{{ match['team-1'] }} vs {{ match['team-2'] }}</div>
-                    
-                    {% if match['score'] %}
-                        {% for inning in match['score'] %}
-                            <div class="inning">
-                                {{ inning['inning'] }}: <span class="score">{{ inning['r'] }}/{{ inning['w'] }} ({{ inning['o'] }} overs)</span>
-                            </div>
-                        {% endfor %}
-                    {% else %}
-                        <div class="inning">Score: N/A</div>
-                    {% endif %}
-
-                    <div class="status {% if 'won' in match['status'].lower() or 'lost' in match['status'].lower() %}completed{% endif %}">
-                        Status: {{ match['status'] }}
-                    </div>
+        {% if matches %}
+            {% for match in matches %}
+                <div>
+                    <h3>{{ match['team1'] }} vs {{ match['team2'] }}</h3>
+                    <p>Score: {{ match['score'] }}</p>
+                    <p>Status: {{ match['status'] }}</p>
                 </div>
             {% endfor %}
         {% else %}
-            <p>No live matches currently.</p>
+            <p>No live matches right now.</p>
         {% endif %}
     </section>
 
     <footer>
-        &copy; 2026 MK SPORTS
+        <p>&copy; 2026 MK SPORTS</p>
     </footer>
 </body>
 </html>
