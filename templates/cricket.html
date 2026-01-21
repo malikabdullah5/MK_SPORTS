@@ -1,50 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>MK SPORTS - Cricket Live Score</title>
+    <title>MK SPORTS - Live Cricket</title>
 </head>
 <body>
-    <header>
-        <h1>MK SPORTS - Live Cricket Score</h1>
-        <nav>
-            <a href="/">Home</a>
-            <a href="/cricket">Cricket</a>
-            <a href="/football">Football</a>
-        </nav>
-    </header>
 
-    <section>
-        <h2>Live Matches</h2>
-        {% if live_matches %}
-            {% for match in live_matches %}
-                <div style="border:1px solid #ccc; padding:10px; margin:5px;">
-                    <strong>{{ match['team1'] }} vs {{ match['team2'] }}</strong><br>
-                    Score: {{ match['score'] }}<br>
-                    Status: {{ match['status'] }}
-                </div>
-            {% endfor %}
-        {% else %}
-            <p>No live matches currently.</p>
-        {% endif %}
-    </section>
+<h1>MK SPORTS - Live Cricket Score</h1>
 
-    <section>
-        <h2>Upcoming Matches</h2>
-        {% if upcoming_matches %}
-            {% for match in upcoming_matches %}
-                <div style="border:1px solid #ccc; padding:10px; margin:5px;">
-                    <strong>{{ match['team1'] }} vs {{ match['team2'] }}</strong><br>
-                    Date: {{ match['date'] }}<br>
-                    Time: {{ match['time'] }}
-                </div>
-            {% endfor %}
-        {% else %}
-            <p>No upcoming matches.</p>
-        {% endif %}
-    </section>
+<h2>Live Matches</h2>
+{% if live_matches %}
+    {% for m in live_matches %}
+        <p>
+            <b>{{ m.team1 }} vs {{ m.team2 }}</b><br>
+            Status: {{ m.status }}
+        </p>
+        <hr>
+    {% endfor %}
+{% else %}
+    <p>No live matches currently.</p>
+{% endif %}
 
-    <footer>
-        <p>&copy; 2026 MK SPORTS</p>
-    </footer>
+<h2>Upcoming Matches</h2>
+{% if upcoming_matches %}
+    {% for m in upcoming_matches %}
+        <p>
+            <b>{{ m.team1 }} vs {{ m.team2 }}</b><br>
+            Date: {{ m.date }}<br>
+            Status: {{ m.status }}
+        </p>
+        <hr>
+    {% endfor %}
+{% else %}
+    <p>No upcoming matches.</p>
+{% endif %}
+
 </body>
 </html>
